@@ -4,3 +4,7 @@
 // var repOwner = process.argv.slice[3];
 // var repoName = process.argv.slice[4];
 
+var request = require('request');
+
+console.log('Welcome to the GitHub Avatar Downloader!');
+
