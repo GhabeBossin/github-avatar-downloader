@@ -20,7 +20,6 @@ function getRepoContributors(repoOwner, repoName, callback) {
   };
   request(options, function(err, response, body) {
     response.setEncoding('utf-8');
-    //console.log('Type of data: ', typeof(body)); // === string
     //transform (parse) the body (JSON string) into an array
     var parsed = JSON.parse(body);
     //set parameters for callback
@@ -30,36 +29,29 @@ function getRepoContributors(repoOwner, repoName, callback) {
 
 //create image downloading function, set params for url and path
 function dlImageByURL(imgURL, pathToImg) {
-  console.log('ANYTHING');
-  request.get(imgURL)               // Note 1
-      .on('error', function (err) {                                    // Note 2
+  request.get(imgURL)
+      .on('error', function (err) {
         throw err;
-      })
-      .on('response', function (response) {
-        console.log('Response Status Code: ' + response.statusCode + '\n' + 'Response Message: ' + response.statusMessage + '\n' + 'Content Type: ' + response.headers['content-type']);
-        console.log('Downloading image...');
       })
       .on('end', function (){
         console.log('Downloaded image!');
       })
       .pipe(fs.createWriteStream(pathToImg));
 }
-dlImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "avatars/kvirani.jpg");
-
 
 //execute callback and pass in arguments, response becomes result
 getRepoContributors('jquery', 'jquery', function(err, result) {
   console.log('Errors:', err);
-  //console.log('Result:', result); // === array of objects
   // assign result to contributor for clairity
   var contributor = result;
-  //loop over the parsed array
+  //loop over the parsed array, create imgURL and pathToImg
   contributor.forEach(function(contributor) {
-    //forEach contributor, log the value of their object key named 'avatar_url'
-    console.log(contributor.avatar_url);
+    dlImageByURL(contributor.avatar_url, 'avatars/' + contributor.login + '.jpg');
   });
 });
 
+
+//
 
 // Pre-emptive thoughts given the command to run from user arguments
 // var https = require('https');
