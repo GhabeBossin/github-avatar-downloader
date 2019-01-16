@@ -8,7 +8,13 @@ var request = require('request');
 var fs = require('fs');
 
 //O HAI
-console.log('Welcome to the GitHub Avatar Downloader!');
+if (!myArgs[0] || !myArgs[1]) {
+  console.log('You must enter both the repo owner and repo name as command line arguments to use GitHub Avatar Downloader!')
+  process.exit(1);
+} else {
+  console.log('Welcome to the GitHub Avatar Downloader!');
+}
+
 
 //create getRepoContributors, set params owner, repo, callback
 function getRepoContributors(repoOwner, repoName, callback) {
