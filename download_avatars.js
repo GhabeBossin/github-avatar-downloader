@@ -1,3 +1,6 @@
+
+//get console input for repoOwner and repoName
+var myArgs = process.argv.slice(2);
 //requires ./secrets.js file for authentication token
 var GITHUB_TOKEN = require('./secrets.js');
 //requires node request package
@@ -40,7 +43,7 @@ function dlImageByURL(imgURL, pathToImg) {
 }
 
 //execute callback and pass in arguments, response becomes result
-getRepoContributors('jquery', 'jquery', function(err, result) {
+getRepoContributors(myArgs[0], myArgs[1], function(err, result) {
   console.log('Errors:', err);
   // assign result to contributor for clairity
   var contributor = result;
@@ -49,12 +52,3 @@ getRepoContributors('jquery', 'jquery', function(err, result) {
     dlImageByURL(contributor.avatar_url, 'avatars/' + contributor.login + '.jpg');
   });
 });
-
-
-//
-
-// Pre-emptive thoughts given the command to run from user arguments
-// var https = require('https');
-// var myArgs = process.argv.slice(2);
-// var repOwner = process.argv.slice[3];
-// var repoName = process.argv.slice[4];
